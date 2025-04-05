@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Investment Trading Platform</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Adlam+Unjoined:wght@400..700&display=swap" rel="stylesheet">
+  <!-- Add this to your <head> section if missing -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #0A1125;
+      --accent: #E0C93D;
+      --light-bg: #F8F9FA;
+      --text: #0A1125;
+      --text-light: #6C757D;
+      --white: #FFFFFF;
+      --black: #000000;
+      --gray-border: #DEE2E6;
+    }
+    
+    body {
+      font-family: "Noto Sans Adlam Unjoined", sans-serif;
+      background-color: var(--white);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    /* Navbar and offcanvas styles */
+    .offcanvas {
+      width: 300px;
+    }
+    .offcanvas-header {
+      background-color: #f8f9fa;
+      border-bottom: 1px solid #dee2e6;
+    }
+    .offcanvas-body {
+      padding: 1rem;
+    }
+    .navbar {
+      padding: 0;
+      background-color: #fff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+    .navbar-toggler {
+      border: none;
+      background: transparent;
+      padding: 0.5rem;
+      color: #333;
+    }
+    .navbar-toggler:focus {
+      box-shadow: none;
+    }
+    .navbar-brand img {
+      max-height: 40px;
+    }
+
+    /* Sidebar menu styles */
+    .nav-link {
+      padding: 1rem;
+      color: #000;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+    .nav-link:hover {
+      background-color: rgba(246, 220, 67, 0.1);
+      color: #000;
+    }
+    .nav-link.underline-before {
+      position: relative;
+    }
+    .nav-link.underline-before::before {
+      content: "";
+      position: absolute;
+      left: 1rem;
+      right: 1rem;
+      top: 0;
+      border-top: 1px solid #dee2e6;
+    }
+    .nav-link.btn-trading {
+      padding: 0.75rem 1rem;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+      text-align: center;
+      display: block;
+      width: calc(100% - 2rem);
+      margin-left: 1rem;
+      margin-right: 1rem;
+      color: #000;
+      background-color: #F6DC43;
+      border-radius: 30px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    .nav-link.btn-trading:hover {
+      background-color: #e0c53d;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(246, 220, 67, 0.3);
+    }
+
+    /* Hero Section */
+    .hero-section {
+      height: 70vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--white);
+      margin-top: 56px; /* To account for fixed navbar */
+    }
+    .hero-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('./img/Green\ Growth\ up_\ page\ thumbnail.jpg'); /* Replace with your image path */
+      background-size: cover;
+      background-position: center;
+      filter: blur(4px);
+      z-index: -1;
+    }
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(10, 17, 37, 0.7);
+      z-index: -1;
+    }
+    .hero-content {
+      max-width: 800px;
+      padding: 0 20px;
+    }
+    .hero-content h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: var(--white);
+    }
+    .hero-content p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      color: rgba(255, 255, 255, 0.9);
+    }
+    .hero-btn {
+      display: inline-block;
+      background-color: var(--accent);
+      color: var(--primary);
+      padding: 15px 35px;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      border: 2px solid var(--accent);
+      box-shadow: 0 4px 15px rgba(224, 201, 61, 0.3);
+    }
+    .hero-btn:hover {
+      background-color: transparent;
+      color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(224, 201, 61, 0.4);
+    }
+
+    /* Main Content Styles */
+    .main-content {
+      padding: 60px 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    
+    h1, h2, h3, h4 {
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 15px;
+    }
+    
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 25px;
+      position: relative;
+      padding-bottom: 15px;
+    }
+    
+    h1:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: var(--accent);
+    }
+    
+    h2 {
+      font-size: 1.8rem;
+      margin-top: 40px;
+      margin-bottom: 20px;
+    }
+    
+    h3 {
+      font-size: 1.4rem;
+      margin-top: 30px;
+      margin-bottom: 15px;
+    }
+    
+    p {
+      margin-bottom: 20px;
+      color: var(--text-light);
+      font-size: 1.05rem;
+    }
+    
+    .intro-text {
+      font-size: 1.1rem;
+      max-width: 800px;
+      margin: 0 auto 40px;
+      color: var(--text-light);
+    }
+    
+    .divider {
+      border: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gray-border), transparent);
+      margin: 50px auto;
+      width: 80%;
+    }
+    
+    .section-title {
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 30px;
+      color: var(--primary);
+      position: relative;
+    }
+    
+    .section-title:after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: var(--accent);
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 40px auto;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+    
+    th, td {
+      padding: 15px 20px;
+      text-align: center;
+      border-bottom: 1px solid var(--gray-border);
+    }
+    
+    th {
+      background-color: var(--primary);
+      color: var(--white);
+      font-weight: 500;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      letter-spacing: 0.5px;
+    }
+    
+    tr:nth-child(even) {
+      background-color: var(--light-bg);
+    }
+    
+    tr:hover {
+      background-color: rgba(224, 201, 61, 0.1);
+    }
+    
+    .cta-section {
+      background: linear-gradient(135deg, var(--primary) 0%, #000000 100%);
+      padding: 60px 30px;
+      margin: 60px 0;
+      border-radius: 8px;
+      color: var(--white);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+    
+    .cta-section h2 {
+      color: var(--white);
+      font-size: 2.2rem;
+      margin-bottom: 20px;
+    }
+    
+    .cta-section p {
+      color: rgba(255, 255, 255, 0.9);
+      max-width: 700px;
+      margin: 0 auto 30px;
+      font-size: 1.1rem;
+    }
+    
+    .cta-button {
+      display: inline-block;
+      background-color: var(--accent);
+      color: var(--primary);
+      padding: 15px 35px;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-top: 15px;
+      transition: all 0.3s ease;
+      border: 2px solid var(--accent);
+      box-shadow: 0 4px 15px rgba(224, 201, 61, 0.3);
+    }
+    
+    .cta-button:hover {
+      background-color: transparent;
+      color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(224, 201, 61, 0.4);
+    }
+    
+    .footer {
+      margin-top: 60px;
+      padding-top: 30px;
+      border-top: 1px solid var(--gray-border);
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+    
+    .question {
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    
+    .answer {
+      background-color: var(--light-bg);
+      padding: 20px;
+      border-radius: 8px;
+      margin: 10px auto 0;
+      border-left: 4px solid var(--accent);
+      max-width: 800px;
+      text-align: center;
+    }
+    
+    @media (max-width: 768px) {
+      body {
+        padding: 25px 15px;
+      }
+      
+      .hero-content h1 {
+        font-size: 2.2rem;
+      }
+      
+      .hero-content p {
+        font-size: 1rem;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+      
+      h2 {
+        font-size: 1.5rem;
+      }
+      
+      h3 {
+        font-size: 1.2rem;
+      }
+      
+      th, td {
+        padding: 12px 15px;
+      }
+      
+      .cta-section {
+        padding: 40px 20px;
+      }
+      
+      .cta-section h2 {
+        font-size: 1.8rem;
+      }
+      
+      .answer {
+        padding: 15px;
+        margin: 10px 10px 0;
+      }
+    }
+
+    /* Login/Sign-up tab styles */
+    .tab-container {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid #dee2e6;
+    }
+    .tab {
+      cursor: pointer;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #6c757d;
+      position: relative;
+      padding-bottom: 10px;
+      flex: 1;
+      text-align: center;
+    }
+    .tab.active {
+      color: #000;
+    }
+    .tab.active::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: -1px;
+      width: 50%;
+      height: 3px;
+      background-color: #F6DC43;
+      border-radius: 3px 3px 0 0;
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    
+    /* Form styles */
+    .form-control {
+      border-radius: 8px;
+      padding: 10px 15px;
+      margin-bottom: 1rem;
+      border: 1px solid #dee2e6;
+    }
+    .btn-primary {
+      background-color: #F6DC43;
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      padding: 10px;
+      font-weight: 600;
+    }
+    .btn-primary:hover {
+      background-color: #e0c53d;
+    }
+    .btn-outline-secondary {
+      border-radius: 8px;
+      padding: 10px;
+      width: 100%;
+    }
+    .divider {
+      text-align: center;
+      margin: 1.5rem 0;
+      color: #6c757d;
+      position: relative;
+    }
+    .divider::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 100%;
+      height: 1px;
+      background-color: #dee2e6;
+      z-index: -1;
+    }
+    .divider span {
+      background-color: #fff;
+      padding: 0 10px;
+    }
+    .footer-links {
+      margin-top: 2rem;
+      text-align: center;
+    }
+    .footer-links a {
+      color: #6c757d;
+      text-decoration: none;
+      margin: 0 0.5rem;
+      font-size: 0.9rem;
+    }
+    .footer-links a:hover {
+      color: #000;
+      text-decoration: underline;
+    }
+    .legal-text {
+      font-size: 0.75rem;
+      color: #6c757d;
+      margin-top: 2rem;
+      text-align: center;
+    }
+    /* Footer Styles - Self-contained without :root variables */
+  .custom-footer {
+    background-color: #0A1125;
+    color: white;
+    padding: 80px 0 40px;
+    position: relative;
+    font-family: 'Noto Sans Adlam Unjoined', sans-serif;
+  }
+  
+  .custom-footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #F6DC43, #E8D03D);
+  }
+  
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  
+  .footer-logo {
+    max-height: 50px;
+    margin-bottom: 20px;
+  }
+  
+  .footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+    margin-bottom: 40px;
+  }
+  
+  .footer-heading {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: #F6DC43;
+    position: relative;
+    padding-bottom: 10px;
+  }
+  
+  .footer-heading::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 40px;
+    height: 2px;
+    background-color: #F6DC43;
+  }
+  
+  .footer-links {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .footer-links li {
+    margin-bottom: 10px;
+  }
+  
+  .footer-links a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+  
+  .footer-links a:hover {
+    color: #F6DC43;
+    padding-left: 5px;
+  }
+  
+  .footer-contact p {
+    margin-bottom: 10px;
+    color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+  }
+  
+  .footer-contact i {
+    margin-right: 10px;
+    color: #F6DC43;
+  }
+  
+  .footer-social {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+  }
+  
+  .footer-social a {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.1);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+  
+  .footer-social a:hover {
+    background-color: #F6DC43;
+    color: #0A1125;
+    transform: translateY(-3px);
+  }
+  
+  .footer-bottom {
+    text-align: center;
+    padding-top: 30px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .custom-footer {
+      padding: 60px 0 30px;
+    }
+    
+    .footer-content {
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+    
+    .footer-heading {
+      font-size: 1.1rem;
+    }
+  }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-light bg-light fixed-top">
+  <div class="container-fluid">
+    <!-- Menu Button (Left) -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu">
+      <i class="bi bi-list"></i>
+    </button>
+
+    <!-- Logo (Middle) -->
+    <a class="navbar-brand mx-auto" href="#">
+      <img src="./img/logo.jpg" alt="Logo">
+    </a>
+    
+    <!-- Login Button (Right) -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#loginSidebar">
+      <i class="bi bi-box-arrow-in-right"></i>
+    </button>
+  </div>
+</nav>
+
+<!-- Sidebar Menu -->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="sidebarMenu">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title"></h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <nav class="nav flex-column">
+      <a class="nav-link" href="./index.html">HOME</a>
+      <a class="nav-link" href="./investments.html">INVESTMENTS</a>
+      <a class="nav-link" href="./faqs.html">FAQs</a>
+      <a class="nav-link underline-before" href="./aboutus.html">About us</a>
+      <a class="nav-link btn btn-trading" href="#">OPEN TRADING ACCOUNT</a>
+    </nav>
+  </div>
+</div>
+
+<!-- Login Sidebar -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="loginSidebar">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Welcome to Our Platform</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div class="tab-container">
+      <div class="tab active" onclick="switchTab(event, 'signin')">Sign in</div>
+      <div class="tab" onclick="switchTab(event, 'createaccount')">Create account</div>
+    </div>
+
+    <!-- Sign In Tab -->
+    <div id="signin" class="tab-content active">
+      <form>
+        <div class="mb-3">
+          <label for="email" class="form-label">Your email address</label>
+          <input type="email" class="form-control" id="email" placeholder="Enter your email">
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password" placeholder="Enter your password">
+        </div>
+        <button type="submit" class="btn btn-primary">Continue</button>
+      </form>
+      <div class="divider"><span>Or sign in with</span></div>
+      <div class="social-login">
+        <button class="btn btn-outline-secondary">
+          <i class="bi bi-google"></i> Google
+        </button>
+      </div>
+      <div class="footer-links">
+        <a href="#">I forgot my password</a>
+      </div>
+    </div>
+
+    <!-- Create Account Tab -->
+    <div id="createaccount" class="tab-content">
+      <form>
+        <div class="mb-3">
+          <label for="country" class="form-label">Country / Region</label>
+          <input type="text" class="form-control" id="country" placeholder="Enter your country">
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Your email address</label>
+          <input type="email" class="form-control" id="email" placeholder="Enter your email">
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password" placeholder="Enter your password">
+          <small class="form-text text-muted">
+            Between 8-15 characters<br>
+            At least one special character<br>
+            At least one upper and one lower case letter<br>
+            At least one number<br>
+          </small>
+        </div>
+        <div class="mb-3">
+          <label for="partnerCode" class="form-label">Partner code (optional)</label>
+          <input type="text" class="form-control" id="partnerCode" placeholder="Enter partner code">
+        </div>
+        <div class="mb-3 form-check">
+          <input type="checkbox" class="form-check-input" id="declaration">
+          <label class="form-check-label" for="declaration">I confirm that I have read and agree to the <a href="#">Client Agreement</a> and <a href="#">Privacy Policy</a></label>
+        </div>
+        <button type="submit" class="btn btn-primary">Continue</button>
+      </form>
+      <div class="divider"><span>Or create account with</span></div>
+      <div class="social-login">
+        <button class="btn btn-outline-secondary">
+          <i class="bi bi-google"></i> Google
+        </button>
+      </div>
+    </div>
+    
+    <!-- Legal Text -->
+    <div class="legal-text">
+      <p>Our platform does not offer services to residents of certain jurisdictions including the USA, Iran, North Korea, the European Union, the United Kingdom and others. The content of the website including translations should not be construed as means for solicitation. Investors make their own and independent decisions.</p>
+      <p>Trading in CFDs and generally leveraged products involves substantial risk of loss and you may lose all of your invested capital.</p>
+    </div>
+
+    <!-- Footer Links -->
+    <div class="footer-links">
+      <a href="#">Privacy Agreement</a>
+      <a href="#">Risk disclosure</a>
+      <a href="#">Preventing money laundering</a>
+      <a href="#">Security instructions</a>
+      <a href="#">Legal documents</a>
+      <a href="#">Complaints Handling Policy</a>
+    </div>
+    <div class="text-center mt-3">
+      <p>© 2023 Investment Trading Platform. All rights reserved.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="hero-background"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1>Smart Investing for Your Future</h1>
+    <p>Access global markets with our award-winning trading platform. Trade stocks, ETFs, options and more with competitive pricing and powerful tools.</p>
+    <a href="#" class="hero-btn">Start Trading Today</a>
+  </div>
+</section>
+
+<!-- Main Content -->
+<div class="main-content">
+  <h1>General Questions</h1>
+  
+  <p class="intro-text">Find answers to common questions about our investment platform, trading services, and account management. If you don't find what you're looking for, our support team is available 24/7 to assist you.</p>
+  
+  <div class="question">
+    <h2>1. How do I open an investment account?</h2>
+    <div class="answer">
+      <p>Opening an account is simple and takes just a few minutes. Click on the 'Sign Up' button at the top of our homepage, provide your personal information, verify your identity, and fund your account to start trading. We offer various account types to suit different investment strategies and experience levels.</p>
+    </div>
+  </div>
+  
+  <div class="question">
+    <h2>2. What investment products do you offer?</h2>
+    <div class="answer">
+      <p>Our platform provides access to a wide range of investment products including stocks, ETFs, mutual funds, bonds, options, futures, and forex. We also offer managed portfolios and robo-advisory services for hands-off investors.</p>
+    </div>
+  </div>
+  
+  <div class="question">
+    <h3>3. What are the benefits of trading with your platform?</h3>
+    <div class="answer">
+      <p>Our platform offers competitive commission rates, advanced trading tools, real-time market data, educational resources, and 24/7 customer support. We pride ourselves on our intuitive interface that caters to both beginners and experienced traders.</p>
+    </div>
+  </div>
+  
+  <div class="question">
+    <h3>4. How do I contact customer support?</h3>
+    <div class="answer">
+      <p>You can reach our support team via live chat, email (support@investmentplatform.com), or phone (1-800-INVEST). We also have an extensive FAQ section and community forum where many questions are already answered.</p>
+    </div>
+  </div>
+  
+  <div class="divider"></div>
+  
+  <div class="question">
+    <h2>5. What are your fees and commissions?</h2>
+    <div class="answer">
+      <p>We offer transparent pricing with no hidden fees. Our commission structure varies by product: $0 for stocks and ETFs, $0.65 per options contract, and competitive spreads for forex trading. There are no account maintenance fees, though certain premium features may require a subscription.</p>
+    </div>
+  </div>
+  
+  <div class="question">
+    <h3>6. How secure is my money and personal information?</h3>
+    <div class="answer">
+      <p>Security is our top priority. We use bank-level encryption, two-factor authentication, and regular security audits. All client funds are held with top-tier banks and protected by SIPC insurance up to $500,000 (including $250,000 for cash claims).</p>
+    </div>
+  </div>
+  
+  <div class="question">
+    <h3>7. Do you offer mobile trading?</h3>
+    <div class="answer">
+      <p>Yes, we offer full-featured iOS and Android apps that allow you to trade, monitor your portfolio, access research, and manage your account from anywhere. Our mobile platform includes all the features of our web platform with a streamlined interface optimized for smaller screens.</p>
+    </div>
+  </div>
+  
+  <div class="question">
+    <h3>8. What educational resources do you provide?</h3>
+    <div class="answer">
+      <p>We offer comprehensive educational materials including video tutorials, webinars, articles, and interactive courses covering everything from basic investing principles to advanced trading strategies. Our virtual trading feature allows you to practice with simulated funds before risking real money.</p>
+    </div>
+  </div>
+  
+  <div class="divider"></div>
+  
+  <div class="cta-section">
+    <h2>Start Building Your Financial Future Today</h2>
+    <p>Join thousands of investors who trust our platform for their trading and investment needs. Whether you're just starting out or are an experienced trader, we have the tools and resources to help you succeed in the markets.</p>
+    <a href="#" class="cta-button">Open Your Account</a>
+  </div>
+  
+  <div class="section-title">Trading Platform FAQs</div>
+  
+  <p class="intro-text">Below you'll find detailed answers to technical questions about our trading platform, features, and functionality. For account-specific questions, please contact our support team.</p>
+  
+  <div class="question">
+    <h2>1. What trading tools are available on your platform?</h2>
+    <div class="answer">
+      <p>Our platform offers advanced charting with technical indicators, real-time market scanners, customizable watchlists, options analysis tools, algorithmic trading capabilities, and more. Professional traders can access our API for developing custom trading strategies.</p>
+    </div>
+  </div>
+  
+  <div class="question">
+    <h3>2. Do you offer margin trading?</h3>
+    <div class="answer">
+      <p>Yes, we offer margin accounts for qualified investors. Margin requirements vary by security, with typical rates starting at 25-30% for stocks. Options and futures trading have different margin requirements. Please review our margin handbook for complete details.</p>
+    </div>
+  </div>
+  
+  <div class="question">
+    <h3>3. What market data do you provide?</h3>
+    <div class="answer">
+      <p>We provide real-time quotes for all US markets, delayed data for international markets, level II market depth, time and sales data, and advanced analytics. Premium market data packages are available for professional traders who need more comprehensive data feeds.</p>
+    </div>
+  </div>
+  
+  <div class="question">
+    <h3>4. How quickly are orders executed?</h3>
+    <div class="answer">
+      <p>Our average order execution time is under 0.1 seconds for market orders. We route orders to multiple exchanges and dark pools to ensure best execution. Limit orders are executed when market conditions meet your specified price.</p>
+    </div>
+  </div>
+  
+  <table>
+    <tr>
+      <th>Account Types</th>
+      <th>Trading Products</th>
+      <th>Resources</th>
+      <th>Support</th>
+    </tr>
+    <tr>
+      <td>Individual Accounts</td>
+      <td>Stocks & ETFs</td>
+      <td>Learning Center</td>
+      <td>24/7 Support</td>
+    </tr>
+    <tr>
+      <td>Joint Accounts</td>
+      <td>Options</td>
+      <td>Market Research</td>
+      <td>Contact Us</td>
+    </tr>
+    <tr>
+      <td>Retirement Accounts</td>
+      <td>Futures</td>
+      <td>Webinars</td>
+      <td>Community Forum</td>
+    </tr>
+    <tr>
+      <td>Trust Accounts</td>
+      <td>Forex</td>
+      <td>Analyst Ratings</td>
+      <td>FAQ Center</td>
+    </tr>
+  </table>
+  
+  <div class="footer">© 2023 Investment Trading Platform. All rights reserved.</div>
+</div>
+<!-- Footer HTML -->
+<footer class="custom-footer">
+  <div class="footer-container">
+    <div class="footer-content">
+      <div class="footer-column">
+        <h3 class="footer-heading">Quick Links</h3>
+        <ul class="footer-links">
+          <li><a href="#">Home</a></li>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Services</a></li>
+          <li><a href="#">FAQs</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-column">
+        <h3 class="footer-heading">Services</h3>
+        <ul class="footer-links">
+          <li><a href="#">Personal Loans</a></li>
+          <li><a href="#">Business Loans</a></li>
+          <li><a href="#">Mortgages</a></li>
+          <li><a href="#">Investment Planning</a></li>
+          <li><a href="#">Debt Consolidation</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-column">
+        <h3 class="footer-heading">Contact Info</h3>
+        <div class="footer-contact">
+          <p><i class="fas fa-map-marker-alt"></i> 123 Financial St, New York, NY 10001</p>
+          <p><i class="fas fa-phone-alt"></i> +1 (800) 123-4567</p>
+          <p><i class="fas fa-envelope"></i> info@loanfinance.com</p>
+          <p><i class="fas fa-clock"></i> Mon-Fri: 9AM - 6PM</p>
+        </div>
+      </div>
+      
+      <div class="footer-column">
+        <h3 class="footer-heading">Follow Us</h3>
+        <div class="footer-social">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>© 2023 Company Name. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a> | <a href="#">Disclosures</a></p>
+    </div>
+  </div>
+</footer>
+
+<!-- Footer CSS -->
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  function switchTab(event, tabName) {
+    // Hide all tab contents
+    document.querySelectorAll('.tab-content').forEach(tab => {
+      tab.classList.remove('active');
+    });
+    
+    // Show the selected tab content
+    document.getElementById(tabName).classList.add('active');
+
+    // Remove active class from all tabs
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.classList.remove('active');
+    });
+    
+    // Add active class to the clicked tab
+    event.currentTarget.classList.add('active');
+  }
+</script>
+</body>
+</html>
